@@ -33,6 +33,7 @@ export class AutocompleteDemo {
   stateCtrl: FormControl;
   currentState = '';
   currentGroupedState = '';
+  displayName = true;
   topHeightCtrl = new FormControl(0);
 
   reactiveStates: any;
@@ -103,7 +104,7 @@ export class AutocompleteDemo {
     this.reactiveStates = this.stateCtrl.valueChanges
       .pipe(
         startWith(this.stateCtrl.value),
-        map(val => this.displayFn(val)),
+        map(val => this.displayNameFn(val)),
         map(name => this.filterStates(name))
       );
 
@@ -121,8 +122,12 @@ export class AutocompleteDemo {
     }, [] as StateGroup[]);
   }
 
-  displayFn(value: any): string {
+  displayNameFn(value: any): string {
     return value && typeof value === 'object' ? value.name : value;
+  }
+
+  displayCodeFn(value: any): string {
+    return value && typeof value === 'object' ? value.code : value;
   }
 
   filterStates(val: string) {
